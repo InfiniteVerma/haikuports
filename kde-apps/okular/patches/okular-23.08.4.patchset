@@ -1,11 +1,46 @@
-From 23a891995568559f60e018038b43ae65daa882b1 Mon Sep 17 00:00:00 2001
-From: Gerasim Troeglazov <3dEyes@gmail.com>
-Date: Wed, 11 May 2022 19:29:57 +1000
-Subject: Fix build for x86
+From cdd9f14f4623d46461787b700634cb8eecc3605f Mon Sep 17 00:00:00 2001
+From: InfiniteVerma <vermainfinite@gmail.com>
+Date: Wed, 20 Dec 2023 16:41:03 +0000
+Subject: [PATCH] TEST
 
+---
+ CMakeLists.txt                     | 8 ++++++--
+ generators/tiff/generator_tiff.cpp | 4 ++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d8ee77c84..3dab8da76 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -13,12 +13,16 @@ set(KF5_REQUIRED_VERSION "5.92.0") # Remember to update the KF_DEPRECATED_WARNIN
+ 
+ set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop (except on Android, where it is 'mobile')")
+ 
+-option(FORCE_NOT_REQUIRED_DEPENDENCIES "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
++option(FORCE_NOT_REQUIRED_DEPENDENCIES "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED" )
+ 
+ if (ANDROID AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES) AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
+     set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;Qt5Qml;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;KF5KHtml;LibZip;DjVuLibre;EPub;Discount;")
+ endif()
+ 
++if (HAIKU AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES) AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
++    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;Qt5Qml;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;KF5KHtml;LibZip;DjVuLibre;EPub;Discount;Poppler;")
++endif()
++
+ function(set_okular_optional_package_properties _name _props)
+     if(NOT "${_props}" STREQUAL "PROPERTIES")
+         message(FATAL_ERROR "PROPERTIES keyword is missing in set_okular_optional_package_properties() call.")
+@@ -184,7 +188,7 @@ if (BUILD_MOBILE)
+     )
+ endif()
+ 
+-if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
++if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)
+     find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
+         Activities
+     )
 diff --git a/generators/tiff/generator_tiff.cpp b/generators/tiff/generator_tiff.cpp
-index 76ecb1d..f5ee8ee 100644
+index 76ecb1db0..f5ee8ee75 100644
 --- a/generators/tiff/generator_tiff.cpp
 +++ b/generators/tiff/generator_tiff.cpp
 @@ -243,7 +243,7 @@ QImage TIFFGenerator::image(Okular::PixmapRequest *request)
@@ -27,25 +62,5 @@ index 76ecb1d..f5ee8ee 100644
          // read data
          if (TIFFReadRGBAImageOriented(d->tiff, width, height, data, ORIENTATION_TOPLEFT) != 0) {
 -- 
-2.30.2
+2.42.1
 
-
-commit 5ea71d831d8d81f861c161fdbca092eb09f7aa44
-Author: InfiniteVerma <vermainfinite@gmail.com>
-Date:   Wed Dec 20 16:03:20 2023 +0000
-
-    Remove a dependency for Haiku
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d8ee77c84..01fb9979b 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -184,7 +184,7 @@ if (BUILD_MOBILE)
-     )
- endif()
- 
--if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
-+if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)
-     find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
-         Activities
-     )

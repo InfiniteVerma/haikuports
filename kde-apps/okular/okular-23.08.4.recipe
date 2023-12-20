@@ -32,6 +32,8 @@ REQUIRES="
 	lib:libjpeg$secondaryArchSuffix
 	lib:libKF5Activities$secondaryArchSuffix
 	lib:libKF5Archive$secondaryArchSuffix
+	lib:libKF5Purpose$secondaryArchSuffix
+	lib:libKF5PurposeWidgets$secondaryArchSuffix
 	lib:libKF5Auth$secondaryArchSuffix
 	lib:libKF5Bookmarks$secondaryArchSuffix
 	lib:libKF5Codecs$secondaryArchSuffix
@@ -92,6 +94,7 @@ BUILD_REQUIRES="
 	devel:libchm$secondaryArchSuffix
 	devel:libdjvulibre$secondaryArchSuffix
 	devel:libepub$secondaryArchSuffix
+	devel:libKF5Purpose$secondaryArchSuffix
 	devel:libjpeg$secondaryArchSuffix
 	devel:libKF5Activities$secondaryArchSuffix
 	devel:libKF5Archive$secondaryArchSuffix
