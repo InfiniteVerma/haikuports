@@ -29,3 +29,23 @@ index 76ecb1d..f5ee8ee 100644
 -- 
 2.30.2
 
+
+commit 5ea71d831d8d81f861c161fdbca092eb09f7aa44
+Author: InfiniteVerma <vermainfinite@gmail.com>
+Date:   Wed Dec 20 16:03:20 2023 +0000
+
+    Remove a dependency for Haiku
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d8ee77c84..01fb9979b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -184,7 +184,7 @@ if (BUILD_MOBILE)
+     )
+ endif()
+ 
+-if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
++if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)
+     find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
+         Activities
+     )
